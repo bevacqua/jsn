@@ -21,5 +21,13 @@ In your Node.JS code, you can parse these variables by accessing the **jsn** com
 
 ```javascript
 var jsn = require('jsn');
-alert(thatMuch);
+
+jsn.parse(source, { how: { awesome: 'well, very much, tee-hee!' } }, function(err, js){
+    if(err){
+        throw err;
+    }
+    console.log(js); // valid js.
+});
 ```
+
+This is particularly useful when you have small pieces of data you want to pass to your JavaScript files. It's often most useful when paired with [**node-assetify**](https://github.com/bevacqua/node-assetify "Node.JS asset manager"), which supports **jsn** out the box.
