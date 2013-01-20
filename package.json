@@ -5,7 +5,7 @@
     "name": "Nicolas Bevacqua",
     "email": "nicolasbevacqua@gmail.com"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
   "licenses": [{
     "type": "MIT"
   }],
-  "main": "./src/jsn.js",
+  "main": "./src/compiler.js",
   "engines": {
     "node": ">= 0.8.x",
 	"npm": ">= 1.1.x"

@@ -10,6 +10,10 @@ function parse(source, context, cb){
                 throw new Error('unexpected length zero for property name');
             }
             local = local[property];
+
+            if(local === undefined){
+                throw new Error('undefined property: ' + property);
+            }
         });
         return local;
     });
