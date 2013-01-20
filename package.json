@@ -1,0 +1,31 @@
+{
+  "name": "jsn",
+  "description": "JavaScript Node server-side variable parser",
+  "author": {
+    "name": "Nicolas Bevacqua",
+    "email": "nicolasbevacqua@gmail.com"
+  },
+  "version": "0.0.1",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "vows": "0.5.x",
+	"mocha": "*",
+	"should": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bevacqua/jsn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bevacqua/jsn/issues"
+  },
+  "licenses": [{
+    "type": "MIT"
+  }],
+  "main": "./src/jsn.js",
+  "engines": {
+    "node": ">= 0.8.x",
+	"npm": ">= 1.1.x"
+  }
+}
