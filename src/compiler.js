@@ -1,5 +1,5 @@
 function parse(source, context, cb){
-    var regex = /@([a-z][a-z\.-_]*)/igm;
+    var regex = /@[a-z][a-z._-]*/gim;
 
     var parsed = source.replace(regex, function(m, i){
         var path = m.substr(1).split('.'),
