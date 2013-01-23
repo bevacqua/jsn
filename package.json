@@ -3,7 +3,8 @@
   "description": "JavaScript Node server-side variable parser",
   "author": {
     "name": "Nicolas Bevacqua",
-    "email": "nicolasbevacqua@gmail.com"
+    "email": "nicolasbevacqua@gmail.com",
+    "url": "http://www.ponyfoo.com"
   },
   "version": "0.0.3",
   "dependencies": {
