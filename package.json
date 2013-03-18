@@ -13,9 +13,6 @@
       "grunt": "~0.4.1",
       "grunt-jasmine-node": "0.0.6"
   },
-  "scripts": {
-    "test": "grunt travis --verbose"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/bevacqua/jsn.git"
