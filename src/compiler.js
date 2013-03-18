@@ -14,11 +14,11 @@ function replace(context){
             }
         });
         return local;
-    }
+    };
 }
 
 function parse(source, context, cb){
-    var regex = /@[a-z][a-z._-]*/gim,
+    var regex = /@[a-z][a-z._\-]*/gim,
         parsed = source.replace(regex, replace(context));
 
     process.nextTick(function(){
