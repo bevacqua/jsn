@@ -3,15 +3,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         jasmine_node: {
             matchall: true,
-            projectRoot: '.',
-            requirejs: false,
-            forceExit: true,
-            jUnit: {
-                report: false,
-                savePath : "./build/reports/jasmine/",
-                useDotNotation: true,
-                consolidate: true
-            }
+            forceExit: true
         }
     });
 
