@@ -1,7 +1,5 @@
-function parse(source, context, cb){
-    var regex = /@[a-z][a-z._-]*/gim;
-
-    var parsed = source.replace(regex, function(m, i){
+function replace(context){
+    return function(m, i){
         var path = m.substr(1).split('.'),
             local = context;
 
@@ -16,9 +14,16 @@ function parse(source, context, cb){
             }
         });
         return local;
-    });
+    }
+}
 
-    cb(null, parsed);
+function parse(source, context, cb){
+    var regex = /@[a-z][a-z._-]*/gim,
+        parsed = source.replace(regex, replace(context));
+
+    process.nextTick(function(){
+        cb(null, parsed);
+    });
 }
 
 module.exports = {

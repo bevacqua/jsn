@@ -10,9 +10,11 @@
   "dependencies": {
   },
   "devDependencies": {
-    "vows": "0.5.x",
-	"mocha": "*",
-	"should": "*"
+      "grunt": "~0.4.1",
+      "grunt-jasmine-node": "0.0.6"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
   },
   "repository": {
     "type": "git",
