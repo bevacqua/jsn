@@ -35,13 +35,6 @@ describe('compiler', function(){
             it('should not throw with valid arguments', function(done){
                 expect(wrapped('',{},done)).not.toThrow();
             });
-
-            it('should invoke text.replace', function(done){
-                compiler.parse('',{},function(){
-                    expect(text.replace).toHaveBeenCalled();
-                    done();
-                });
-            });
         });
 
         describe('input/output test cases', function(){
