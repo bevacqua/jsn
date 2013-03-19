@@ -1,3 +1,5 @@
+'use strict';
+
 var text = require('../../src/text.js');
 
 describe('text', function(){
@@ -15,6 +17,14 @@ describe('text', function(){
             var replaceFunction = text.replace(context);
             return replaceFunction(expression);
         };
+    });
+
+    describe('undefined', function(){
+        it('should throw', function(){
+            var expression = '@@';
+
+            expect(replace(expression)).toEqual('@');
+        });
     });
 
     describe('text replacement', function(){

@@ -1,3 +1,5 @@
+'use strict';
+
 var text = require('./text.js');
 
 function parse(source, context, cb){

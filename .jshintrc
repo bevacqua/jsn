@@ -1,0 +1,14 @@
+{
+  "strict": true,
+  "node": true,
+  "globals": {
+    "console": true,
+    "module": true,
+
+    "describe": false,
+    "it": false,
+    "expect": false,
+    "beforeEach": false,
+    "spyOn": false
+  }
+}
