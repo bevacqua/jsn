@@ -22,11 +22,9 @@
   "bugs": {
     "url": "https://github.com/bevacqua/jsn/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ],
+  "licenses": [{
+    "type": "MIT"
+  }],
   "main": "./src/compiler.js",
   "engines": {
     "node": ">= 0.8.x",
