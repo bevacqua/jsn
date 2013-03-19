@@ -22,8 +22,6 @@ describe('compiler', function(){
                         compiler.parse.apply(compiler.parse, args);
                     };
                 };
-
-                spyOn(text, 'replace');
             });
 
             it('should throw on undefined arguments', function(){
