@@ -3,55 +3,92 @@
 var text = require('../../src/text.js');
 
 describe('text', function(){
-    var context, replace;
+    describe('replace#beforeAll', function(){
+        it('should be any function, and return any function', function(){
+            expect(text.replace).toBeDefined();
+            expect(text.replace).toEqual(jasmine.any(Function));
 
-    beforeEach(function(){
-        context = {
-            plain: 'plain',
-            foo: {
-                bar: 'baz'
-            }
-        };
+            expect(function(){
+                text.replace();
+            }).toThrow();
 
-        replace = function(expression){
-            var replaceFunction = text.replace(context);
-            return replaceFunction(expression);
-        };
-    });
+            expect(function(){
+                text.replace({});
+            }).not.toThrow();
 
-    describe('undefined', function(){
-        it('should throw', function(){
-            var expression = '@@';
-
-            expect(replace(expression)).toEqual('@');
+            expect(text.replace({})).toEqual(jasmine.any(Function));
         });
     });
 
-    describe('text replacement', function(){
-        it('should replace entity with context', function(){
-            var expression = '@plain';
+    describe('replace#unit', function(){
+        var context, replace, replaceWrapper;
 
-            expect(replace(expression)).toEqual(context.plain);
+        beforeEach(function(){
+            context = {
+                plain: 'plain',
+                foo: {
+                    bar: 'baz',
+                    undef: undefined
+                }
+            };
+
+            replace = function(expression){
+                var replaceFunction = text.replace(context);
+                return replaceFunction(expression);
+            };
+
+            replaceWrapper = function(expression){
+                return function(){
+                    replace(expression);
+                };
+            };
         });
 
-        it('should walk a context path', function(){
-            var expression = '@foo.bar';
+        describe('exceptions', function(){
+            it('should throw on non-object context', function(){
+                var such = function(context){
+                    return function(){
+                        text.replace(context);
+                    };
+                };
 
-            expect(replace(expression)).toEqual(context.foo.bar);
+                expect(such(null)).toThrow();
+                expect(such(0)).toThrow();
+                expect(such(1)).toThrow();
+                expect(such('1')).toThrow();
+                expect(such('')).toThrow();
+                expect(such(function(){})).toThrow();
+            });
+
+            it('should throw on undeclared property', function(){
+                expect(replaceWrapper('@foo.tar')).toThrow();
+            });
+
+            it('should not throw on undefined property', function(){
+                expect(replaceWrapper('@foo.undef')).not.toThrow();
+            });
+
+            it('should throw on malformed expression', function(){
+                expect(replaceWrapper('@foo..tar')).toThrow();
+                expect(replaceWrapper('@foo.tar.')).toThrow();
+            });
         });
-    });
 
-    describe('text escaping', function(){
-        it('should unescape @@', function(){
-            var expression = '@@';
+        describe('text replacement', function(){
+            it('should replace entity with context', function(){
+                expect(replace('@plain')).toEqual(context.plain);
+            });
 
-            expect(replace(expression)).toEqual('@');
+            it('should walk a context path', function(){
+                expect(replace('@foo.bar')).toEqual(context.foo.bar);
+            });
         });
 
-        it('should unescape @@foo', function(){
-            var expression = '@@foo';
-
-            expect(replace(expression)).toEqual('@foo');
+        describe('text escaping', function(){
+            it('should unescape @@ expressions', function(){
+                expect(replace('@@')).toEqual('@');
+                expect(replace('@@foo')).toEqual('@foo');
+            });
         });
     });
 });

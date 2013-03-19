@@ -5,8 +5,8 @@ function walk(location,property){
         throw new Error('unexpected length zero for property name');
     }
 
-    if(!location){ // can't walk any further
-        throw new Error('undefined property: ' + property);
+    if(!(property in location)){ // can't walk any further
+        throw new Error('undeclared property: ' + property);
     }
 
     return location[property];
@@ -14,6 +14,10 @@ function walk(location,property){
 
 module.exports = {
     replace: function(context){
+        if(!context || typeof context !== 'object'){
+            throw new Error('context must be defined');
+        }
+
         return function(m, i){
             if(m.indexOf('@@') === 0){
                 return m.substr(1);
