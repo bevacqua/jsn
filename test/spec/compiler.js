@@ -1,7 +1,16 @@
 'use strict';
 
-var compiler = require('../../src/compiler.js'),
-    text = require('../../src/text.js');
+var proxyquire = require('proxyquire').noCallThru(),
+    text = require('../../src/text.js'), // the real dependency
+    stub,
+    stubReplace = function(context){
+        return stub ? stub(context) : text.replace(context);
+    },
+    compiler = proxyquire('../../src/compiler.js', {
+        './text.js': {
+            replace: stubReplace
+        }
+    });
 
 describe('compiler', function(){
     describe('parse#beforeAll', function(){
@@ -31,47 +40,32 @@ describe('compiler', function(){
             });
 
             it('should not throw with valid arguments', function(done){
+                stub = jasmine.createSpy('stub').andReturn(function(){});
                 expect(wrapped('',{},done)).not.toThrow();
+                expect(stub).toHaveBeenCalled();
+                stub = undefined;
             });
         });
 
-        describe('input/output test cases', function(){
+        describe('input/output integration test cases', function(){
             var cases = [],
                 context = {
                     plain: 'plain',
-                    foo: {
-                        bar: 'baz',
-                        undef: undefined,
-                        nil: null,
-                        num: 12
-                    },
+                    foo: { bar: 'baz', nil: null, num: 12 },
                     color: 'red',
-                    how: {
-                        awesome: 'very'
-                    }
+                    how: { awesome: 'very' }
                 };
 
-            function include(input,output){
-                cases.push({
-                    input: input,
-                    output: output,
-                    context: Object.create(context)
-                });
-            }
+            function include(input,output){ cases.push({ input: input, output: output }); }
 
-            include('@plain','plain');
-            include('@foo.bar','baz');
-            include('@foo.undef','undefined');
-            include('@foo.nil','null');
             include('an@foo.nil','annull');
-            include('@foo.num','12');
-            include('@@foo.bar','@foo.bar');
             include('Roses are @color!','Roses are red!');
             include('var thatMuch = "@how.awesome";', 'var thatMuch = "very";');
+            include('var @foo.bar = @foo.num;', 'var baz = 12;');
 
             cases.forEach(function(testCase,i){
-                it('should return expected output for case #' + (i+1), function(done){
-                    compiler.parse(testCase.input, testCase.context, function(err,result){
+                it('should return expected output for integration case #' + (i+1), function(done){
+                    compiler.parse(testCase.input, Object.create(context), function(err,result){
                         expect(err).toBeNull();
                         expect(result).toEqual(testCase.output);
                         done();

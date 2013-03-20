@@ -1,6 +1,7 @@
 'use strict';
 
-var text = require('../../src/text.js');
+var proxyquire = require('proxyquire').noCallThru(),
+    text = proxyquire('../../src/text.js', {});
 
 describe('text', function(){
     describe('replace#beforeAll', function(){
@@ -85,6 +86,43 @@ describe('text', function(){
         });
 
         describe('text escaping', function(){
+            it('should unescape @@ expressions', function(){
+                expect(replace('@@')).toEqual('@');
+                expect(replace('@@foo')).toEqual('@foo');
+            });
+        });
+
+        describe('test cases', function(){
+            var cases = [],
+                context = {
+                    plain: 'plain',
+                    foo: {
+                        bar: 'baz',
+                        undef: undefined,
+                        nil: null,
+                        num: 12
+                    },
+                    color: 'red',
+                    how: { awesome: 'very' }
+                };
+
+            function include(input,output){ cases.push({ input: input, output: output }); }
+
+            include('@plain','plain');
+            include('@foo.bar','baz');
+            include('@foo.undef',undefined);
+            include('@foo.nil',null);
+            include('@foo.num',12);
+            include('@@foo.bar','@foo.bar');
+
+            cases.forEach(function(testCase,i){
+                var replace = text.replace(Object.create(context));
+
+                it('should return expected output for case #' + (i+1), function(){
+                    expect(replace(testCase.input)).toEqual(testCase.output);
+                });
+            });
+
             it('should unescape @@ expressions', function(){
                 expect(replace('@@')).toEqual('@');
                 expect(replace('@@foo')).toEqual('@foo');
