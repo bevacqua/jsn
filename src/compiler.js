@@ -13,7 +13,7 @@ function parse(source, context, cb){
     if(typeof cb !== 'function'){
         throw new Error('you must provide a callback');
     }
-console.log(text);
+
     var replace = text.replace(context),
         parsed = source.replace(regex, replace);
 
