@@ -30,6 +30,8 @@ jsn.parse(source, { how: { awesome: 'well, very much, tee-hee!' } }, function(er
 });
 ```
 
+You can alternatively use `jsn.parseFile(path, model, callback)` to use a template file directly, instead.
+
 This is particularly useful when you have small pieces of data you want to pass to your JavaScript files. It's often most useful when paired with [**node-assetify**](https://github.com/bevacqua/node-assetify "Node.JS asset manager"), which supports **jsn** out the box.
 
 To keep things simple, JSN supports only context variable names with **[A-z], [0-9], -, or _** characters. _`@` characters can be escaped using `@@`._
