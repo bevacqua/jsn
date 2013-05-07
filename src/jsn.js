@@ -1,3 +1,5 @@
+'use strict';
+
 var compiler = require('./compiler.js'),
 	fs = require('fs');
 
