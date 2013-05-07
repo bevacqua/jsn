@@ -10,7 +10,7 @@ module.exports = {
 			if(err){
 				return cb(err);
 			}
-			compiler.parse(data, context, done);
+			compiler.parse(data.toString(), context, done);
 		});
 	}
 };
