@@ -8,7 +8,7 @@ module.exports = {
 	parseFile: function(absolute, context, done){
 		fs.readFile(absolute, function(err, data){
 			if(err){
-				return cb(err);
+				return done(err);
 			}
 			compiler.parse(data.toString(), context, done);
 		});
